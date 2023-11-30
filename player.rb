@@ -8,6 +8,12 @@ class Player
 
   def initialize(id)
     @name = prompt_name(id)
+    @symbol = nil
+    @score = { wins: 0, loses: 0, ties: 0 }
+  end
+
+  def assign_symbol(symbol_to_set)
+    @symbol = symbol_to_set
   end
 
   private

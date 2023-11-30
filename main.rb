@@ -6,3 +6,5 @@ require_relative  'player'
 game = Game.new
 
 (1..2).each { |id| game.add_player(Player.new(id)) }
+
+game.start_game_loop
