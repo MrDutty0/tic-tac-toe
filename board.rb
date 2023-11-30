@@ -1,12 +1,18 @@
 # frozen_string_literal: true
 
+require_relative 'game_end_checking'
+
 # for managing the board
 class Board
+  include GameEndChecking
+
+  attr_accessor :board
+
   def initialize
-    @game_board = Array.new(3) { Array.new(3, '_') }
+    @board = Array.new(3) { Array.new(3, '_') }
   end
 
-  private
-
-  attr_accessor :game_board
+  def end_of_game?
+    !board_winners.empty?
+  end
 end
