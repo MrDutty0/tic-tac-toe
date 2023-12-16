@@ -6,6 +6,8 @@ require_relative 'promptable'
 class Player
   include Promptable
 
+  attr_reader :symbol
+
   def initialize(id)
     @name = prompt_name(id)
     @symbol = nil

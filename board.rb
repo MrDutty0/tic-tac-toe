@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 require_relative 'game_end_checking'
+require_relative 'board_printing'
 
 # for managing the board
 class Board
   include GameEndChecking
+  include BoardPrinting
 
   attr_accessor :board
 
