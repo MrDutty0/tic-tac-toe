@@ -4,15 +4,17 @@ require 'colorize'
 
 # print colored board
 module BoardPrinting
-  COLOR_LIGHT_GREEN = :light_green
+  COLOR_GREEN = :green
   COLOR_RED = :red
-  COLOR_YELLOW = :yellow
   COLOR_GREY = :grey
+  COLOR_LIGHT_WHITE = :light_white
+  COLORED_CROSS = 'X'.colorize(COLOR_GREEN)
+  COLORED_NOUGHT = 'O'.colorize(COLOR_RED)
 
   PARTITION_LINE = '---+---+---'.colorize(COLOR_GREY)
 
-  def display_board(curr_position, turn_symbol)
-    assembled_board = get_colored_board(curr_position, turn_symbol)
+  def display_board(curr_position)
+    assembled_board = get_colored_board(curr_position)
                       .then(&method(:add_spaces))
                       .then(&method(:add_vertical_lines))
                       .then(&method(:add_partition_lines))
@@ -20,24 +22,15 @@ module BoardPrinting
     puts assembled_board
   end
 
-  def get_colored_board(curr_position, turn_symbol)
-    turn_sym_colored = turn_symbol.colorize(COLOR_LIGHT_GREEN)
-
-    opp_sym = (['X', 'O'] - [turn_symbol])[0]
-    opp_sym_colored = opp_sym.colorize(:red)
+  def get_colored_board(curr_position)
+    mappings = { 'X' => COLORED_CROSS, 'O' => COLORED_NOUGHT }
 
     colored_board = clone_2d_array(board).map do |row|
-      row.map do |el|
-        colored_symbol = el
-        colored_symbol = opp_sym_colored if opp_sym == el
-        colored_symbol = turn_sym_colored if turn_symbol == el
-
-        colored_symbol
-      end
+      row.map { |el| mappings.fetch(el, el) }
     end
 
     i, j = curr_position
-    colored_board[i][j] = colored_board[i][j].colorize(COLOR_YELLOW)
+    colored_board[i][j] = colored_board[i][j].colorize(background: COLOR_LIGHT_WHITE)
     colored_board
   end
 
