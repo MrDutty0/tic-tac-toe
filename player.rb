@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative 'promptable'
+require_relative 'player_io'
 
 # Class for player of the game
 class Player
-  include Promptable
+  include PlayerIO
 
-  attr_reader :symbol
+  attr_reader :symbol, :score, :name
 
   def initialize(id)
     @name = prompt_name(id)
@@ -18,7 +18,19 @@ class Player
     @symbol = symbol_to_set
   end
 
+  def add_tie
+    score[:ties] += 1
+  end
+
+  def add_loss
+    score[:loses] += 1
+  end
+
+  def add_win
+    score[:wins] += 1
+  end
+
   private
 
-  attr_reader :name
+  attr_writer :score
 end
